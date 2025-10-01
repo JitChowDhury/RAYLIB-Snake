@@ -36,6 +36,23 @@ The goal is simple: **eat the food, grow the snake, and avoid colliding with you
 
 ---
 
+## 📝 Development Steps
+
+Here’s the roadmap followed to build the game:
+
+1. Creating a blank canvas & Game Loop
+2. Creating the Food
+3. Creating the Snake
+4. Moving the Snake
+5. Making the Snake eat the Food
+6. Making the Snake grow longer
+7. Checking for collision with edges & tail
+8. Adding title & frame
+9. Keeping score
+10. Adding sounds
+
+---
+
 ## 🚀 How to Run
 
 1. Clone the repository
