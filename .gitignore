@@ -1,0 +1,10 @@
+# Ignore build files
+build/
+
+# Ignore VSCode or IDE files (optional)
+.vscode/
+*.suo
+*.user
+*.db
+*.opendb
+*.VC.db
