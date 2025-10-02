@@ -40,8 +40,8 @@ The goal is simple: **eat the food, grow the snake, and avoid colliding with you
 
 Here’s the roadmap followed to build the game:
 
-1. Creating a blank canvas & Game Loop
-2. Creating the Food
+1. Creating a blank canvas & Game Loop ✅
+2. Creating the Food ✅
 3. Creating the Snake
 4. Moving the Snake
 5. Making the Snake eat the Food
