@@ -1,6 +1,7 @@
 #include <iostream>
 #include <raylib.h>
 #include <deque>
+#include <raymath.h>
 
 Color green = { 173,204,96,255 };
 Color darkGreen = { 43,51,24,255 };
@@ -8,10 +9,24 @@ Color darkGreen = { 43,51,24,255 };
 int cellSize = 30;
 int cellCount = 25;
 
+double lastUpdateTime = 0;
+
+bool eventTriggered(double interval)
+{
+	double currentTime = GetTime();
+	if (currentTime - lastUpdateTime >= interval)
+	{
+		lastUpdateTime = currentTime;
+		return true;
+	}
+	return false;
+}
+
 class Snake
 {
 public:
 	std::deque<Vector2> body = { Vector2{6,9},Vector2{5,9},Vector2{4,9} };
+	Vector2 direction = { 1,0 };
 
 	void Draw()
 	{
@@ -24,7 +39,15 @@ public:
 			DrawRectangleRounded(segment,0.5,6 ,darkGreen);
 		}
 	}
+
+
+	void Update()
+	{
+		body.pop_back();
+		body.push_front(Vector2Add(body[0] ,direction));
+	}
 };
+
 
 
 class Food
@@ -61,6 +84,24 @@ public:
 };
 
 
+class Game
+{
+public:
+	Snake snake = Snake();
+	Food food = Food();
+
+	void Draw()
+	{
+		food.Draw();
+		snake.Draw();
+	}
+
+	void Update()
+	{
+		snake.Update();
+	}
+};
+
 int main() {
 	//const int WINDOW_WIDTH = 750;
 	//const int WINDOW_HEIGHT = 750;
@@ -68,18 +109,37 @@ int main() {
 
 	InitWindow(cellSize* cellCount, cellSize * cellCount, "RetroSnake");
 	SetTargetFPS(60);
-
-	Food food = Food();
-	Snake snake = Snake();
+	Game game = Game();
 
 	while (!WindowShouldClose())
 	{
 		BeginDrawing();//create a blank canvas
-		
+
+		if (eventTriggered(0.2))
+		{
+			game.Update();
+		}
+		if (IsKeyPressed(KEY_W) && game.snake.direction.y!=1)
+		{
+			game.snake.direction = { 0,-1 };
+		}
+		else if(IsKeyPressed(KEY_S) && game.snake.direction.y != -1)
+		{
+			game.snake.direction = { 0,1 };
+		}
+		else if(IsKeyPressed(KEY_A) && game.snake.direction.x != 1)
+		{
+			game.snake.direction = { -1,0 };
+		}
+		else if(IsKeyPressed(KEY_D) && game.snake.direction.x != -1)
+		{
+			game.snake.direction = { 1,0 };
+		}
+
+
 		//drawing
 		ClearBackground(green);
-		food.Draw();
-		snake.Draw();
+		game.Draw();
 		
 		EndDrawing();
 
