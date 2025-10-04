@@ -6,9 +6,9 @@
   <img src="https://img.shields.io/badge/Game-Retro_Snake-orange?style=for-the-badge"/>
 </p>
 
-<!-- <p align="center">
-  <img src="preview.gif" alt="Game Preview" width="600"/>
-</p> -->
+<p align="center">
+  <img src="![alt text](preview.png)" alt="Game Preview" width="600"/>
+</p>
 
 ---
 
