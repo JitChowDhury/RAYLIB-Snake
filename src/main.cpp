@@ -132,6 +132,7 @@ public:
 	Snake snake = Snake();
 	Food food = Food(snake.body);
 	bool running = true;
+	int score = 0;
 
 	void Draw()
 	{
@@ -154,6 +155,7 @@ public:
 		{
 			food.position = food.GenerateRandomPos(snake.body);
 			snake.addSegment = true;
+			score++;
 		}
 	}
 
@@ -174,6 +176,7 @@ public:
 		snake.Reset();
 		food.position = food.GenerateRandomPos(snake.body);
 		running = false;
+		score = 0;
 	}
 
 	void CheckCollisionWithTail()
@@ -233,6 +236,7 @@ int main() {
 	}, 5, darkGreen);
 
 		DrawText("Retro Snake", offset - 5, 20, 40, BLACK);
+		DrawText(TextFormat("Score: %i", game.score), offset - 5, offset + cellSize * cellCount + 10, 40, BLACK);
 		game.Draw();
 		
 		EndDrawing();
