@@ -102,15 +102,15 @@ public:
 
 	Vector2 GenerateRandomCell()
 	{
-		float x = GetRandomValue(0, cellCount - 1);
-		float y = GetRandomValue(0, cellCount - 1);
+		float x = (float)GetRandomValue(0, cellCount - 1);
+		float y = (float)GetRandomValue(0, cellCount - 1);
 		return Vector2{ x,y };
 	}
 
 	Vector2 GenerateRandomPos(std::deque<Vector2> snakeBody)
 	{
 
-		Vector2 position = GenerateRandomCell();
+		 position = GenerateRandomCell();
 		while (ElementInDeque(position, snakeBody))
 		{
 			position = GenerateRandomCell();
@@ -120,7 +120,7 @@ public:
 
 	void Draw()
 	{
-		DrawTexture(texture, offset + position.x * cellSize, offset + position.y * cellSize, WHITE);
+		DrawTexture(texture, offset + (int)position.x * cellSize, offset + (int)position.y * cellSize, WHITE);
 	}
 
 };
@@ -134,6 +134,35 @@ public:
 	bool running = true;
 	int score = 0;
 
+	Sound eatSound;
+	Sound wallSound;
+	Music bgMusic;
+
+	Game()
+	{
+		InitAudioDevice();
+		SetMasterVolume(1.0f);
+		eatSound = LoadSound("Assets/Sounds/eat.wav");
+		wallSound = LoadSound("Assets/Sounds/wall.wav");
+
+		bgMusic = LoadMusicStream("Assets/Sounds/bgm.wav");
+		PlayMusicStream(bgMusic);
+		
+		SetMusicVolume(bgMusic, 0.05f); 
+
+		SetSoundVolume(eatSound, 1.0f);
+		SetSoundVolume(wallSound, 1.0f);
+	}
+
+	~Game()
+	{
+		UnloadSound(eatSound);
+		UnloadSound(wallSound);
+		UnloadMusicStream(bgMusic);
+		CloseAudioDevice();
+
+	}
+
 	void Draw()
 	{
 		food.Draw();
@@ -142,11 +171,15 @@ public:
 
 	void Update()
 	{
-		if (!running) return;
-		snake.Update();
-		CheckCollisionWithFood();
-		CheckCollisionWithEdges();
-		CheckCollisionWithTail();
+
+		if (running)
+		{
+			snake.Update();
+			CheckCollisionWithFood();
+			CheckCollisionWithEdges();
+			CheckCollisionWithTail();
+		}
+
 	}
 
 	void CheckCollisionWithFood()
@@ -155,6 +188,7 @@ public:
 		{
 			food.position = food.GenerateRandomPos(snake.body);
 			snake.addSegment = true;
+			PlaySound(eatSound);
 			score++;
 		}
 	}
@@ -175,6 +209,7 @@ public:
 	{
 		snake.Reset();
 		food.position = food.GenerateRandomPos(snake.body);
+		PlaySound(wallSound);
 		running = false;
 		score = 0;
 	}
@@ -201,6 +236,11 @@ int main() {
 
 	while (!WindowShouldClose())
 	{
+		UpdateMusicStream(game.bgMusic);
+		if (GetMusicTimePlayed(game.bgMusic) >= GetMusicTimeLength(game.bgMusic)) {
+			StopMusicStream(game.bgMusic);
+			PlayMusicStream(game.bgMusic);
+		}
 		BeginDrawing();//create a blank canvas
 
 		if (eventTriggered(0.2))
@@ -240,10 +280,11 @@ int main() {
 		game.Draw();
 		
 		EndDrawing();
+		
 
 
 	}
-	
+
 	CloseWindow();
 	return 0;
 }
