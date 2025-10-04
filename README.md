@@ -46,7 +46,7 @@ Here’s the roadmap followed to build the game:
 4. Moving the Snake ✅
 5. Making the Snake eat the Food ✅
 6. Making the Snake grow longer ✅
-7. Checking for collision with edges & tail
+7. Checking for collision with edges & tail ✅
 8. Adding title & frame
 9. Keeping score
 10. Adding sounds
