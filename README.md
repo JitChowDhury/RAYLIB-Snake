@@ -7,7 +7,7 @@
 </p>
 
 <p align="center">
-  <img src="![alt text](preview.png)" alt="Game Preview" width="600"/>
+  <img src="preview.png" alt="Game Preview" width="600"/>
 </p>
 
 ---
