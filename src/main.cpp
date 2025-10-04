@@ -8,6 +8,8 @@ Color darkGreen = { 43,51,24,255 };
 
 int cellSize = 30;
 int cellCount = 25;
+int offset = 75;
+
 
 double lastUpdateTime = 0;
 
@@ -48,7 +50,7 @@ public:
 		{
 			float  x = body[i].x;
 			float  y = body[i].y;
-			Rectangle segment = Rectangle{ x * cellSize, y * cellSize, (float)cellSize, (float)cellSize };
+			Rectangle segment = Rectangle{offset+ x * cellSize,offset+ y * cellSize, (float)cellSize, (float)cellSize };
 
 			DrawRectangleRounded(segment,0.5,6 ,BLACK);
 		}
@@ -118,7 +120,7 @@ public:
 
 	void Draw()
 	{
-		DrawTexture(texture, position.x * cellSize, position.y * cellSize, WHITE);
+		DrawTexture(texture, offset + position.x * cellSize, offset + position.y * cellSize, WHITE);
 	}
 
 };
@@ -190,7 +192,7 @@ int main() {
 	//const int WINDOW_HEIGHT = 750;
 
 
-	InitWindow(cellSize* cellCount, cellSize * cellCount, "RetroSnake");
+	InitWindow(2 * offset + cellSize* cellCount, 2 * offset + cellSize * cellCount, "RetroSnake");
 	SetTargetFPS(60);
 	Game game = Game();
 
@@ -202,23 +204,23 @@ int main() {
 		{
 			game.Update();
 		}
-		if (IsKeyPressed(KEY_W) && game.snake.direction.y!=1)
+		if (IsKeyPressed(KEY_W) && game.snake.direction.y != 1)
 		{
 			game.snake.direction = { 0,-1 };
 			game.running = true;
 
 		}
-		else if(IsKeyPressed(KEY_S) && game.snake.direction.y != -1)
+		else if (IsKeyPressed(KEY_S) && game.snake.direction.y != -1)
 		{
 			game.snake.direction = { 0,1 };
 			game.running = true;
 		}
-		else if(IsKeyPressed(KEY_A) && game.snake.direction.x != 1)
+		else if (IsKeyPressed(KEY_A) && game.snake.direction.x != 1)
 		{
 			game.snake.direction = { -1,0 };
 			game.running = true;
 		}
-		else if(IsKeyPressed(KEY_D) && game.snake.direction.x != -1)
+		else if (IsKeyPressed(KEY_D) && game.snake.direction.x != -1)
 		{
 			game.snake.direction = { 1,0 };
 			game.running = true;
@@ -227,6 +229,8 @@ int main() {
 
 		//drawing
 		ClearBackground(green);
+		DrawRectangleLinesEx(Rectangle{(float)offset - 5, (float)offset - 5, (float)cellSize * cellCount + 10, (float)cellSize *cellCount + 10
+	}, 5, darkGreen);
 		game.Draw();
 		
 		EndDrawing();
