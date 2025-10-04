@@ -49,7 +49,7 @@ Here’s the roadmap followed to build the game:
 7. Checking for collision with edges & tail ✅
 8. Adding title & frame ✅
 9. Keeping score ✅
-10. Adding sounds
+10. Adding sounds ✅
 
 ---
 
