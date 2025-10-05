@@ -5,6 +5,9 @@
 
 Color green = { 173,204,96,255 };
 Color darkGreen = { 43,51,24,255 };
+Color background = { 240, 230, 200, 255 };
+Color snakeColor = { 40, 20, 50, 255 };
+
 
 int cellSize = 30;
 int cellCount = 25;
@@ -52,7 +55,7 @@ public:
 			float  y = body[i].y;
 			Rectangle segment = Rectangle{offset+ x * cellSize,offset+ y * cellSize, (float)cellSize, (float)cellSize };
 
-			DrawRectangleRounded(segment,0.5,6 ,BLACK);
+			DrawRectangleRounded(segment,0.5,6 , snakeColor);
 		}
 	}
 
@@ -271,7 +274,7 @@ int main() {
 
 
 		//drawing
-		ClearBackground(green);
+		ClearBackground(background);
 		DrawRectangleLinesEx(Rectangle{(float)offset - 5, (float)offset - 5, (float)cellSize * cellCount + 10, (float)cellSize *cellCount + 10
 	}, 5, darkGreen);
 
